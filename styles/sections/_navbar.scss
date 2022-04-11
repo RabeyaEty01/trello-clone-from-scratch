@@ -1,0 +1,15 @@
+@use "../custom" as *;
+
+.navbar {
+  padding-left: $gap;
+  display: flex;
+  align-items: center;
+  &.app {
+    background-color: $appbar-bg-color;
+    font-size: 1.5rem;
+  }
+  &.board {
+    background-color: $board-bg-color;
+    font-size: 1.1rem;
+  }
+}
