@@ -1,23 +1,12 @@
-import Image from "next/image";
 import React from "react";
-import todo from "/public/images/todolist.jpg";
 
-const Card = () => {
+const Card = (props) => {
+  const { card } = props;
   return (
-    <ul className="card-list">
-      <li className="card-item">
-        <Image src={todo} alt="todo image" className="image" />
-        Title: DOTONLINE TRELLO
-      </li>
-      <li className="card-item">Add what you would like to work on below</li>
-      <li className="card-item">Add what you would like to work on below</li>
-      <li className="card-item">Add what you would like to work on below</li>
-      <li className="card-item">Add what you would like to work on below</li>
-      <li className="card-item">Add what you would like to work on below</li>
-      <li className="card-item">Add what you would like to work on below</li>
-      <li className="card-item">Add what you would like to work on below</li>
-      <li className="card-item">Add what you would like to work on below</li>
-    </ul>
+    <li className="card-item">
+      {card.cover && <img src={card.cover} className="card-cover" />}
+      {card.title}
+    </li>
   );
 };
 

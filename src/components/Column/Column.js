@@ -1,11 +1,19 @@
 import React from "react";
+import { mapOrder } from "../../utilities/sorts";
 import Card from "../Card/Card";
 const Column = (props) => {
-  const {id,title}=props.column;
+  const { column } = props;
+  const cards = mapOrder(column.cards, column.cardOrder, "id");
+
   return (
     <div className="column">
-      <header>{title}</header>
-      <Card />
+      <header>{column.title}</header>
+      <ul className="card-list">
+        {cards.map((card, index) => (
+          <Card key={index} card={card} />
+        ))}
+      </ul>
+
       <footer>Add another card</footer>
     </div>
   );
