@@ -6,13 +6,39 @@
   grid-template-rows: 40px 50px 1fr;
   background-color: $board-bg-color;
 
+  .nav {
+    padding-left: $gap;
+    display: flex;
+    align-items: center;
+    &.app {
+      background-color: $appbar-bg-color;
+      font-size: 1.5rem;
+    }
+    &.board {
+      background-color: $board-bg-color;
+      font-size: 1.1rem;
+    }
+  }
+
   .board-columns {
     display: flex;
     overflow-x: auto;
+    &::-webkit-scrollbar {
+      -webkit-appearance: none;
+    }
+    &::-webkit-scrollbar:horizontal {
+      height: 11px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: rgb(255, 255, 255,.24);
+      border-right: 5px solid $list-bg-color;
+    }
+
     .column {
       flex: 0 0 auto;
       width: 300px;
       height: calc(100% - #{$gap});
+      margin-left: $gap;
       > * {
         background-color: $list-bg-color;
         color: #333;
@@ -23,15 +49,14 @@
         height: $column-header-height;
         line-height: $column-header-height;
         font-size: 16px;
+        font-weight: bold;
         border-top-left-radius: $column-border-radius;
         border-top-right-radius: $column-border-radius;
       }
       footer {
-        padding-left: 15px;
+        padding-left: $gap;
         height: $column-footer-height;
         line-height: $column-footer-height;
-        font-size: 16px;
-        font-weight: bold;
         border-bottom-left-radius: $column-border-radius;
         border-bottom-right-radius: $column-border-radius;
       }
@@ -39,9 +64,20 @@
         list-style-type: none;
         margin: 0;
         max-height: calc(
-          100%- #{$column-header-height}-#{$column-footer-height}
+          100% - #{$column-header-height} - #{$column-footer-height}
         );
         overflow-y: auto;
+        &::-webkit-scrollbar {
+          -webkit-appearance: none;
+        }
+        &::-webkit-scrollbar:vertical {
+          width: 11px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: darken($list-bg-color, 15);
+          border-right: 5px solid $list-bg-color;
+        }
+
         li {
           background-color: white;
           padding: $gap;
@@ -50,10 +86,13 @@
           &:not(:last-child) {
             margin-bottom: $gap;
           }
-          img {
-            display: block;
-            width: calc(100%+2 * #{$gap});
-            margin: -$gap 0 $gap -$gap;
+
+          .image {
+            display: block !important;
+            width: calc(100% + 2 * #{$gap}) !important;
+            margin: -10px 0 10px -10px !important;
+            border-top-left-radius: $card-border-radius;
+            border-top-right-radius: $card-border-radius;
           }
         }
       }
