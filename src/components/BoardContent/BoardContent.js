@@ -1,6 +1,7 @@
 import { isEmpty } from "lodash";
 import React, { useEffect, useState } from "react";
 import { initialData } from "../../actions/initialData";
+import { mapOrder } from "../../utilities/sorts";
 import Column from "../Column/Column";
 
 const BoardContent = () => {
@@ -14,13 +15,8 @@ const BoardContent = () => {
     if (boardFromDB) {
       setBoard(boardFromDB);
       //sort column
-      boardFromDB.columns.sort(function (a, b) {
-        return (
-          boardFromDB.columnOrder.indexOf(a.id) -
-          boardFromDB.columnOrder.indexOf(b.id)
-        );
-      });
-      setColumns(boardFromDB.columns);
+
+      setColumns(mapOrder(boardFromDB.columns, boardFromDB.columnOrder, "id"));
     }
   }, []);
 
