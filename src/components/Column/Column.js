@@ -1,10 +1,11 @@
 import React from "react";
-import Task from "../Task/Task";
-const Column = () => {
+import Card from "../Card/Card";
+const Column = (props) => {
+  const {id,title}=props.column;
   return (
     <div className="column">
-      <header>Sunday</header>
-      <Task />
+      <header>{title}</header>
+      <Card />
       <footer>Add another card</footer>
     </div>
   );
