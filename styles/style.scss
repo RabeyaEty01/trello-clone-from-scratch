@@ -2,4 +2,8 @@
 //import the sections
 @use "sections/global";
 @use "sections/navbar";
+@use "sections/boardbar";
+@use "sections/boardContent";
+@use "sections/column";
+@use "sections/task";
 @use "sections/masterPage";
