@@ -3,10 +3,10 @@ import React from "react";
 const Card = (props) => {
   const { card } = props;
   return (
-    <li className="card-item">
+    <div className="card-item">
       {card.cover && <img src={card.cover} className="card-cover" />}
       {card.title}
-    </li>
+    </div>
   );
 };
 
