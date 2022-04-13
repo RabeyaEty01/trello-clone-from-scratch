@@ -1,6 +1,7 @@
 @use "../custom" as *;
 
 .navbar-app {
+  height: $nav-app-height;
   padding-left: $gap;
   display: flex;
   align-items: center;

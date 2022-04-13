@@ -1,6 +1,7 @@
 @use "../custom" as *;
 
 .navbar-board {
+  height: $nav-board-height;
   padding-left: $gap;
   display: flex;
   align-items: center;

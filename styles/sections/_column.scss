@@ -3,10 +3,8 @@
 .column {
   flex: 0 0 auto;
   width: 300px;
-  height: calc(100% - #{$gap});
-  &:not(:first-child) {
-    margin-left: $gap;
-  }
+  height: $column-height;
+  margin-left: $gap;
   > * {
     background-color: $list-bg-color;
     color: #333;
@@ -33,7 +31,7 @@
   .card-list {
     margin: 0;
     max-height: calc(
-      100% - #{$column-header-height} - #{$column-footer-height}
+     #{$column-height} - #{$column-header-height} - #{$column-footer-height}
     );
     overflow-y: auto;
     &::-webkit-scrollbar {
