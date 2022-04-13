@@ -3,27 +3,18 @@ import { Container, Draggable } from "react-smooth-dnd";
 import { mapOrder } from "../../utilities/sorts";
 import Card from "../Card/Card";
 const Column = (props) => {
-  const { column } = props;
+  const { column,onCardDrop } = props;
   const cards = mapOrder(column.cards, column.cardOrder, "id");
 
-  const onCardDrop = () => {};
+
   return (
     <div className="column">
       <header className="column-drag-handle">{column.title}</header>
       <div className="card-list">
         <Container
-          // onDragStart={(e) => console.log("drag started", e)}
-          // onDragEnd={(e) => console.log("drag ended", e)}
-          // onDragEnter={() => {
-          //   console.log("drag enter:", column.id);
-          // }}
-          // onDragLeave={() => {
-          //   console.log("drag leave:", column.id);
-          // }}
-          //onDropReady={(p) => console.log("Drop ready: ", p)}
           orientation="vertical"
           groupName="col"
-          onDrop={onCardDrop}
+          onDrop={(dropResult) => onCardDrop(column.id, dropResult)}
           getChildPayload={(index) => cards[index]}
           dragClass="card-ghost"
           dropClass="card-ghost-drop"
