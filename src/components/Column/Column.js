@@ -1,11 +1,13 @@
+import Image from "next/image";
 import React from "react";
 import { Container, Draggable } from "react-smooth-dnd";
 import { mapOrder } from "../../utilities/sorts";
 import Card from "../Card/Card";
-const Column = (props) => {
-  const { column,onCardDrop } = props;
-  const cards = mapOrder(column.cards, column.cardOrder, "id");
+import plus from "/public/images/PLUS.svg";
 
+const Column = (props) => {
+  const { column, onCardDrop } = props;
+  const cards = mapOrder(column.cards, column.cardOrder, "id");
 
   return (
     <div className="column">
@@ -33,7 +35,14 @@ const Column = (props) => {
         </Container>
       </div>
 
-      <footer>Add another card</footer>
+      <footer>
+        <div className="d-flex">
+          <div className="icon d-flex align-items-center">
+            <Image src={plus} alt="" width="16px" height="16px"  />
+          </div>
+          <div>Add another card</div>
+        </div>
+      </footer>
     </div>
   );
 };
