@@ -18,6 +18,13 @@
     border-top-left-radius: $column-border-radius;
     border-top-right-radius: $column-border-radius;
     cursor: pointer;
+    display: flex;
+    .column-title {
+      flex: 90%;
+    }
+    .column-dropdown-actions {
+      flex: 10%;
+    }
   }
   footer {
     padding-left: $gap;
@@ -31,8 +38,9 @@
       cursor: pointer;
       &:hover {
         color: $app-main-text-color;
-        img{
-          filter: brightness(0) saturate(100%) invert(15%) sepia(74%) saturate(28%) hue-rotate(4deg) brightness(110%) contrast(97%);
+        img {
+          filter: brightness(0) saturate(100%) invert(15%) sepia(74%)
+            saturate(28%) hue-rotate(4deg) brightness(110%) contrast(97%);
         }
       }
     }

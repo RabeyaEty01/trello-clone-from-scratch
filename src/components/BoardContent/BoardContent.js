@@ -73,28 +73,28 @@ const BoardContent = () => {
   };
 
   const addNewColumn = () => {
-    if(!newColumnTitle){
+    if (!newColumnTitle) {
       newColumnInputRef.current.focus();
-      return
+      return;
     }
-    const newColumnToAdd={
-      id:Math.random().toString(36).substr(2,5), //5 random characters will remove when we implement code api
-      boardId:board.id,
-      title:newColumnTitle.trim(),
-      cardOrder:[],
-      cards:[]
-    }
-    let newColumns =[...columns]
-    newColumns.push(newColumnToAdd)
+    const newColumnToAdd = {
+      id: Math.random().toString(36).substr(2, 5), //5 random characters will remove when we implement code api
+      boardId: board.id,
+      title: newColumnTitle.trim(),
+      cardOrder: [],
+      cards: [],
+    };
+    let newColumns = [...columns];
+    newColumns.push(newColumnToAdd);
 
-    let newBoard={...board}
-    newBoard.columnOrder=newColumns.map(c=>c.id)
-    newBoard.columns=newColumns;
+    let newBoard = { ...board };
+    newBoard.columnOrder = newColumns.map((c) => c.id);
+    newBoard.columns = newColumns;
     setColumns(newColumns);
     setBoard(newBoard);
     setNewColumnTitle("");
-    toggleOpenNewColumnForm()
-    console.log(newColumnTitle)
+    toggleOpenNewColumnForm();
+    console.log(newColumnTitle);
   };
 
   return (
@@ -143,12 +143,17 @@ const BoardContent = () => {
                     ref={newColumnInputRef}
                     value={newColumnTitle}
                     onChange={onNewColumnTitleChange}
-                    onKeyDown={event=>(event.key=== "Enter") && addNewColumn()}
+                    onKeyDown={(event) =>
+                      event.key === "Enter" && addNewColumn()
+                    }
                   />
                   <button className="btn btn-success" onClick={addNewColumn}>
                     Add column
                   </button>
-                  <span className="cancel-new-column" onClick={toggleOpenNewColumnForm}>
+                  <span
+                    className="cancel-new-column"
+                    onClick={toggleOpenNewColumnForm}
+                  >
                     <Image src={cross} alt="" width="14px" height="14px" />
                   </span>
                 </div>
