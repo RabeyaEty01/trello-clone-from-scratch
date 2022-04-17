@@ -36,7 +36,7 @@ const Column = (props) => {
       </div>
 
       <footer>
-        <div className="d-flex">
+        <div className="d-flex footer-actions">
           <div className="icon d-flex align-items-center">
             <Image src={plus} alt="" width="16px" height="16px"  />
           </div>

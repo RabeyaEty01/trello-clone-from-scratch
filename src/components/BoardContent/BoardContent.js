@@ -1,11 +1,12 @@
 import { isEmpty } from "lodash";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { Container, Draggable } from "react-smooth-dnd";
 import { initialData } from "../../actions/initialData";
 import { applyDrag } from "../../utilities/dragDrop";
 import { mapOrder } from "../../utilities/sorts";
 import Column from "../Column/Column";
-
+import plus from "/public/images/PLUS.svg";
 const BoardContent = () => {
   const [board, setBoard] = useState({});
   const [columns, setColumns] = useState([]);
@@ -68,6 +69,14 @@ const BoardContent = () => {
           </Draggable>
         ))}
       </Container>
+      <div className="add-new-column">
+        <div className="d-flex">
+          <div className="icon">
+            <Image src={plus} alt="" width="14px" height="14px" />
+          </div>
+          <span>Add another column</span>
+        </div>
+      </div>
     </div>
   );
 };
