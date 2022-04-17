@@ -5,6 +5,11 @@
   height: $board-content-height;
   overflow-x: auto;
   overflow-y: hidden;
+  &::after {
+    content: "";
+    flex: 0 0 $gap;
+  }
+
   &::-webkit-scrollbar {
     -webkit-appearance: none;
   }
@@ -24,6 +29,7 @@
   .add-new-column {
     flex: 0 0 auto;
     width: 250px;
+    max-width: 250px;
     height: 32px;
     line-height: 24px;
     padding: 4px 0 4px 15px;
@@ -33,8 +39,36 @@
     font-size: 15px;
     background-color: hsla(0, 0%, 100%, 0.24);
     border-radius: $card-border-radius;
-    &:hover{
+    &:hover {
       background-color: hsla(0, 0%, 100%, 0.34);
+    }
+  }
+  .enter-new-column {
+    width: 250px;
+    max-width: 250px;
+    background-color: $column-bg-color;
+    line-height: 32px;
+    padding: 4px 10px;
+    margin-left: $gap;
+    border-radius: $card-border-radius;
+    input.input-enter-new-column{
+      margin:5px 0;
+    }
+    .cancel-new-column{
+      margin-left: $gap;
+      cursor: pointer;
+     img{
+      filter: brightness(0) saturate(100%) invert(37%) sepia(51%) saturate(1960%) hue-rotate(328deg) brightness(99%) contrast(88%);
+    
+     }
+    }
+  }
+  input,
+  .form-control,.btn {
+    &:focus,
+    &:active {
+      box-shadow: none;
+      outline: none;
     }
   }
 }
