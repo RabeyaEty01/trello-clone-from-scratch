@@ -37,6 +37,7 @@ const BoardContent = () => {
   useEffect(() => {
     if (newColumnInputRef && newColumnInputRef.current) {
       newColumnInputRef.current.focus();
+      newColumnInputRef.current.select();
     }
   }, [openNewColumnsForm]);
 
@@ -91,6 +92,8 @@ const BoardContent = () => {
     newBoard.columns=newColumns;
     setColumns(newColumns);
     setBoard(newBoard);
+    setNewColumnTitle("");
+    toggleOpenNewColumnForm()
     console.log(newColumnTitle)
   };
 
@@ -140,11 +143,12 @@ const BoardContent = () => {
                     ref={newColumnInputRef}
                     value={newColumnTitle}
                     onChange={onNewColumnTitleChange}
+                    onKeyDown={event=>(event.key=== "Enter") && addNewColumn()}
                   />
                   <button className="btn btn-success" onClick={addNewColumn}>
                     Add column
                   </button>
-                  <span className="cancel-new-column">
+                  <span className="cancel-new-column" onClick={toggleOpenNewColumnForm}>
                     <Image src={cross} alt="" width="14px" height="14px" />
                   </span>
                 </div>
