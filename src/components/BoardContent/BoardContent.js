@@ -1,6 +1,7 @@
-import { isEmpty } from "lodash";
+import { cloneDeep, isEmpty } from "lodash";
 import Image from "next/image";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { Button, Form } from "react-bootstrap";
 import { Container, Draggable } from "react-smooth-dnd";
 import { initialData } from "../../actions/initialData";
 import { applyDrag } from "../../utilities/dragDrop";
@@ -13,14 +14,15 @@ const BoardContent = () => {
   const [board, setBoard] = useState({});
   const [columns, setColumns] = useState([]);
   const [openNewColumnsForm, setOpenNewColumnForm] = useState(false);
-
   const newColumnInputRef = useRef(null);
   const [newColumnTitle, setNewColumnTitle] = useState("");
+  const onNewColumnTitleChange = (e) => setNewColumnTitle(e.target.value);
 
-  const onNewColumnTitleChange = useCallback(
-    (e) => setNewColumnTitle(e.target.value),
-    []
-  );
+  const toggleOpenNewColumnForm = () =>{
+    setNewColumnTitle("");
+    setOpenNewColumnForm(!openNewColumnsForm);
+  }
+
 
   useEffect(() => {
     const boardFromDB = initialData.boards.find(
@@ -68,10 +70,6 @@ const BoardContent = () => {
     }
   };
 
-  const toggleOpenNewColumnForm = () => {
-    setOpenNewColumnForm(!openNewColumnsForm);
-  };
-
   const addNewColumn = () => {
     if (!newColumnTitle) {
       newColumnInputRef.current.focus();
@@ -103,22 +101,21 @@ const BoardContent = () => {
     const columnIndexToUpdate = newColumns.findIndex(
       (i) => i.id === columnIdToUpdate
     );
-    if(newColumnToUpdate._destroy){
+    if (newColumnToUpdate._destroy) {
       //remove column
-      newColumns.splice(columnIndexToUpdate,1)
-    }
-    else{
+      newColumns.splice(columnIndexToUpdate, 1);
+    } else {
       //update column info
-      newColumns.splice(columnIndexToUpdate,1,newColumnToUpdate)
+      newColumns.splice(columnIndexToUpdate, 1, newColumnToUpdate);
     }
     let newBoard = { ...board };
     newBoard.columnOrder = newColumns.map((c) => c.id);
     newBoard.columns = newColumns;
     setColumns(newColumns);
     setBoard(newBoard);
-
-    
   };
+
+
 
   return (
     <div className="board-content">
@@ -163,8 +160,9 @@ const BoardContent = () => {
             <div className="row">
               <div className="col ">
                 <div className="enter-new-column">
-                  <input
-                    className="form-control form-control-sm input-enter-new-column"
+                  <Form.Control
+                    className="input-enter-new-column"
+                    size="sm"
                     type="text"
                     placeholder="Enter column title..."
                     ref={newColumnInputRef}
@@ -174,11 +172,11 @@ const BoardContent = () => {
                       event.key === "Enter" && addNewColumn()
                     }
                   />
-                  <button className="btn btn-success" onClick={addNewColumn}>
+                  <Button variant="success" size="sm" onClick={addNewColumn}>
                     Add column
-                  </button>
+                  </Button>
                   <span
-                    className="cancel-new-column"
+                    className="cancel-icon"
                     onClick={toggleOpenNewColumnForm}
                   >
                     <Image src={cross} alt="" width="14px" height="14px" />

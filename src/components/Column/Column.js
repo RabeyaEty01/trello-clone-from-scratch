@@ -1,6 +1,7 @@
+import { cloneDeep } from "lodash";
 import Image from "next/image";
-import React, { useCallback, useEffect, useState } from "react";
-import { Form } from "react-bootstrap";
+import React, { useEffect, useRef, useState } from "react";
+import { Button, Form } from "react-bootstrap";
 import { Container, Draggable } from "react-smooth-dnd";
 import { MODAL_ACTION_CONFIRM } from "../../utilities/constants";
 import {
@@ -10,6 +11,7 @@ import {
 import { mapOrder } from "../../utilities/sorts";
 import Card from "../Card/Card";
 import ConfirmModal from "../Common/ConfirmModal";
+import cross from "/public/images/cross.svg";
 import plus from "/public/images/PLUS.svg";
 
 const Column = (props) => {
@@ -17,15 +19,27 @@ const Column = (props) => {
   const cards = mapOrder(column.cards, column.cardOrder, "id");
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [columnTitle, setColumnTitle] = useState("");
+  const handleColumnTitleChange = (e) => setColumnTitle(e.target.value);
+  const [openNewCardForm, setOpenCardForm] = useState(false);
+  const toggleOpenNewCardForm = () => {
+    setNewCardTitle("");
+    setOpenCardForm(!openNewCardForm);
+  };
+  const newCardTextareaRef = useRef(null);
 
-  const handleColumnTitleChange = useCallback(
-    (e) => setColumnTitle(e.target.value),
-    []
-  );
+  const [newCardTitle, setNewCardTitle] = useState("");
+  const onNewCardTitleChange = (e) => setNewCardTitle(e.target.value);
 
   useEffect(() => {
     setColumnTitle(column.title);
   }, [column.title]);
+
+  useEffect(() => {
+    if (newCardTextareaRef && newCardTextareaRef.current) {
+      newCardTextareaRef.current.focus();
+      newCardTextareaRef.current.select();
+    }
+  }, [openNewCardForm]);
 
   const toglleShowConfirmModal = () => setShowConfirmModal(!showConfirmModal);
 
@@ -48,6 +62,28 @@ const Column = (props) => {
       title: columnTitle,
     };
     onUpdateColumn(newColumn);
+  };
+
+  const addNewCard = () => {
+    if (!newCardTitle) {
+      newCardTextareaRef.current.focus();
+      return;
+    }
+
+    const newCardToAdd = {
+      id: Math.random().toString(36).substr(2, 5), //5 random characters will remove when we implement code api
+      boardId: column.boardId,
+      columnId: column.id,
+      title: newCardTitle.trim(),
+      cover: null,
+    };
+
+    let newColumn = cloneDeep(column);
+    newColumn.cards.push(newCardToAdd);
+    newColumn.cardOrder.push(newCardToAdd.id);
+    onUpdateColumn(newColumn);
+    setNewCardTitle("");
+    toggleOpenNewCardForm();
   };
 
   return (
@@ -79,7 +115,7 @@ const Column = (props) => {
             ></button>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <li>
-                <a className="dropdown-item" href="#">
+                <a className="dropdown-item" href="#"  onClick={toggleOpenNewCardForm}>
                   Add card...
                 </a>
               </li>
@@ -127,15 +163,45 @@ const Column = (props) => {
             </Draggable>
           ))}
         </Container>
+        {openNewCardForm && (
+          <div className="add-new-card-area">
+            <Form.Control
+              className="textarea-enter-new-card"
+              size="sm"
+              as="textarea"
+              rows="3"
+              placeholder="Enter a title for this card..."
+              ref={newCardTextareaRef}
+              value={newCardTitle}
+              onChange={onNewCardTitleChange}
+              onKeyDown={(event) => event.key === "Enter" && addNewCard()}
+            />
+          </div>
+        )}
       </div>
 
       <footer>
-        <div className="d-flex footer-actions">
-          <div className="icon d-flex align-items-center">
-            <Image src={plus} alt="" width="16px" height="16px" />
+        {openNewCardForm && (
+          <div className="add-new-card-actions">
+            <Button variant="success" size="sm" onClick={addNewCard}>
+              Add card
+            </Button>
+            <span className="cancel-icon" onClick={toggleOpenNewCardForm}>
+              <Image src={cross} alt="" width="14px" height="14px" />
+            </span>
           </div>
-          <div>Add another card</div>
-        </div>
+        )}
+        {!openNewCardForm && (
+          <div
+            className="d-flex footer-actions"
+            onClick={toggleOpenNewCardForm}
+          >
+            <div className="icon d-flex align-items-center">
+              <Image src={plus} alt="" width="16px" height="16px" />
+            </div>
+            <div>Add another card</div>
+          </div>
+        )}
       </footer>
 
       <ConfirmModal

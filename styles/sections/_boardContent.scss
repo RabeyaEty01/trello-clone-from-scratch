@@ -55,21 +55,13 @@
       margin:5px 0;
       &:focus{
         border-color: $board-bg-color;
-
       }
     }
-    .cancel-new-column{
-      margin-left: $gap;
-      cursor: pointer;
-     img{
-      filter: brightness(0) saturate(100%) invert(37%) sepia(51%) saturate(1960%) hue-rotate(328deg) brightness(99%) contrast(88%);
-    
-     }
-    }
   }
-  input.form-control,.btn {
+  input.form-control,.btn,textarea {
     &:focus,
     &:active {
+      border: 1px solid $board-bg-color;
       box-shadow: none !important;
       outline: none !important; 
     }
@@ -82,7 +74,7 @@
     cursor: pointer;
     &:focus{
       background-color: white;
-      border: 1px solid $board-bg-color;
+      
     }
   }
 }

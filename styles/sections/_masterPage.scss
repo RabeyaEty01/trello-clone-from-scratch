@@ -20,3 +20,12 @@
   font-size: 20px;
   text-align: center;
 }
+
+.cancel-icon {
+  margin-left: $gap;
+  cursor: pointer;
+  img {
+    filter: brightness(0) saturate(100%) invert(37%) sepia(51%) saturate(1960%)
+      hue-rotate(328deg) brightness(99%) contrast(88%);
+  }
+}
