@@ -1,8 +1,9 @@
-import { cloneDeep, isEmpty } from "lodash";
+import { isEmpty } from "lodash";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Container, Draggable } from "react-smooth-dnd";
+import { fetchBoardDetails } from "../../actions/ApiCall";
 import { initialData } from "../../actions/initialData";
 import { applyDrag } from "../../utilities/dragDrop";
 import { mapOrder } from "../../utilities/sorts";
@@ -18,22 +19,27 @@ const BoardContent = () => {
   const [newColumnTitle, setNewColumnTitle] = useState("");
   const onNewColumnTitleChange = (e) => setNewColumnTitle(e.target.value);
 
-  const toggleOpenNewColumnForm = () =>{
+  const toggleOpenNewColumnForm = () => {
     setNewColumnTitle("");
     setOpenNewColumnForm(!openNewColumnsForm);
-  }
-
+  };
 
   useEffect(() => {
-    const boardFromDB = initialData.boards.find(
-      (board) => board.id === "board-1"
-    );
-    if (boardFromDB) {
-      setBoard(boardFromDB);
+    // const boardFromDB = initialData.boards.find(
+    //   (board) => board.id === "board-1"
+    // );
+    const boardId = "625d25cd89a9822b835c4190";
+    fetchBoardDetails(boardId).then(board=>{
+      setBoard(board);
       //sort column
+      //setColumns(mapOrder(board.columns, board.columnOrder, "id"));
+    });
 
-      setColumns(mapOrder(boardFromDB.columns, boardFromDB.columnOrder, "id"));
-    }
+    // if (boardFromDB) {
+    //   setBoard(boardFromDB);
+    //   //sort column
+    //   setColumns(mapOrder(boardFromDB.columns, boardFromDB.columnOrder, "id"));
+    // }
   }, []);
 
   useEffect(() => {
@@ -114,8 +120,6 @@ const BoardContent = () => {
     setColumns(newColumns);
     setBoard(newBoard);
   };
-
-
 
   return (
     <div className="board-content">

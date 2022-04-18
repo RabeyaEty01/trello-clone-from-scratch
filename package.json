@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "axios": "^0.26.1",
     "bootstrap": "^5.1.3",
     "html-react-parser": "^1.4.11",
     "lodash": "^4.17.21",
