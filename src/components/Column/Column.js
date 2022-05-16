@@ -16,7 +16,7 @@ import plus from "/public/images/PLUS.svg";
 
 const Column = (props) => {
   const { column, onCardDrop, onUpdateColumn } = props;
-  const cards = mapOrder(column.cards, column.cardOrder, "id");
+  const cards = mapOrder(column.cards,"id");
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [columnTitle, setColumnTitle] = useState("");
   const handleColumnTitleChange = (e) => setColumnTitle(e.target.value);
@@ -147,7 +147,7 @@ const Column = (props) => {
           orientation="vertical"
           groupName="col"
           onDrop={(dropResult) => onCardDrop(column.id, dropResult)}
-          getChildPayload={(index) => cards[index]}
+          //getChildPayload={(index) => cards[index]}
           dragClass="card-ghost"
           dropClass="card-ghost-drop"
           dropPlaceholder={{
